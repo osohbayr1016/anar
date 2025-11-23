@@ -56,9 +56,15 @@ router.post("/signup", async (req, res) => {
     }
     catch (error) {
         console.error("Signup error:", error);
+        if (error instanceof Error && error.message.includes("E11000")) {
+            return res.status(400).json({
+                success: false,
+                message: "Email already exists",
+            });
+        }
         res.status(500).json({
             success: false,
-            message: "Server error during signup",
+            message: error instanceof Error ? error.message : "Server error during signup",
         });
     }
 });
@@ -84,6 +90,12 @@ router.post("/login", async (req, res) => {
             });
         }
         // Check password
+        if (!user.password) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid credentials",
+            });
+        }
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
             return res.status(401).json({

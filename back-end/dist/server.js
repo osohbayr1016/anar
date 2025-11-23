@@ -13,13 +13,14 @@ const orders_1 = __importDefault(require("./services/orders"));
 const reviews_1 = __importDefault(require("./services/reviews"));
 const tickets_1 = __importDefault(require("./services/tickets"));
 const categories_1 = __importDefault(require("./services/categories"));
+const about_1 = __importDefault(require("./services/about"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 // Connect to MongoDB
-// Optional connect if URI exists, otherwise continue with mock data
-if (process.env.MONGODB_URI) {
-    (0, database_1.default)();
-}
+(0, database_1.default)().catch((error) => {
+    console.error("Failed to connect to MongoDB:", error);
+    process.exit(1);
+});
 // Middleware
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
@@ -43,6 +44,7 @@ app.use("/api/orders", orders_1.default);
 app.use("/api/reviews", reviews_1.default);
 app.use("/api/tickets", tickets_1.default);
 app.use("/api/categories", categories_1.default);
+app.use("/api/about", about_1.default);
 const PORT = process.env.PORT || 4000;
 app
     .listen(PORT, () => {

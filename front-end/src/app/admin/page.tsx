@@ -53,101 +53,140 @@ export default function AdminDashboard() {
     },
   ];
 
+  const navItems = [
+    { href: "/admin/male", label: "Эрэгтэй", icon: "👔", count: stats.maleProducts },
+    { href: "/admin/female", label: "Эмэгтэй", icon: "👗", count: stats.femaleProducts },
+    { href: "/admin/children", label: "Хүүхэд", icon: "🎒", count: stats.childrenProducts },
+    { href: "/admin/about", label: "Бидний тухай", icon: "ℹ️" },
+    { href: "/admin/orders", label: "Захиалга", icon: "📦" },
+    { href: "/admin/users", label: "Хэрэглэгч", icon: "👥" },
+    { href: "/admin/support", label: "Дэмжлэг", icon: "💬" },
+    { href: "/admin/categories", label: "Ангилал", icon: "🏷️" },
+    { href: "/", label: "Дэлгүүр", icon: "🏠" },
+  ];
+
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-white py-6 sm:py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header */}
-          <div className="mb-6 sm:mb-8">
-            <h1 className="text-3xl sm:text-4xl font-bold text-black">
-              Админ самбар
-            </h1>
-            <p className="text-black mt-2 text-sm sm:text-base">
-              Дэлгүүрийн бүтээгдэхүүн, хэрэглэгчдийг удирдах
-            </p>
-          </div>
-
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
-            <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-black text-sm">Нийт бүтээгдэхүүн</p>
-                  <p className="text-3xl font-bold mt-1 text-black">
-                    {stats.totalProducts}
-                  </p>
-                </div>
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center text-2xl">
-                  📦
-                </div>
-              </div>
-            </div>
-            <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-black text-sm">Эрэгтэй</p>
-                  <p className="text-3xl font-bold mt-1 text-black">
-                    {stats.maleProducts}
-                  </p>
-                </div>
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center text-2xl">
-                  👔
-                </div>
-              </div>
-            </div>
-            <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-black text-sm">Эмэгтэй</p>
-                  <p className="text-3xl font-bold mt-1 text-black">
-                    {stats.femaleProducts}
-                  </p>
-                </div>
-                <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-pink-600 rounded-lg flex items-center justify-center text-2xl">
-                  👗
-                </div>
-              </div>
-            </div>
-            <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-black text-sm">Хүүхэд</p>
-                  <p className="text-3xl font-bold mt-1 text-black">
-                    {stats.childrenProducts}
-                  </p>
-                </div>
-                <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-lg flex items-center justify-center text-2xl">
-                  🎒
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Collections Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
-            {collections.map((collection) => (
-              <Link
-                key={collection.href}
-                href={collection.href}
-                className="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all"
-              >
-                <div
-                  className={`h-32 bg-gradient-to-br ${collection.color} flex items-center justify-center text-6xl`}
+      <div className="min-h-screen bg-white flex flex-col lg:flex-row">
+        {/* Left Sidebar */}
+        <aside className="w-full lg:w-64 bg-white border-b lg:border-b-0 lg:border-r border-gray-200 lg:min-h-screen lg:sticky lg:top-16">
+          <div className="p-4 lg:p-6">
+            <h2 className="text-xl font-bold text-black mb-4 lg:mb-6">Админ самбар</h2>
+            <nav className="flex lg:flex-col overflow-x-auto lg:overflow-x-visible space-x-2 lg:space-x-0 lg:space-y-2">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors group whitespace-nowrap lg:w-full"
                 >
-                  {collection.icon}
+                  <div className="flex items-center space-x-3">
+                    <span className="text-xl">{item.icon}</span>
+                    <span className="text-black font-medium">{item.label}</span>
+                  </div>
+                  {item.count !== undefined && (
+                    <span className="bg-black text-white text-xs px-2 py-1 rounded-full ml-2">
+                      {item.count}
+                    </span>
+                  )}
+                </Link>
+              ))}
+            </nav>
+          </div>
+        </aside>
+
+        {/* Main Content */}
+        <main className="flex-1 p-4 sm:p-6 lg:p-8">
+          <div className="max-w-7xl mx-auto">
+            {/* Header */}
+            <div className="mb-8">
+              <h1 className="text-3xl sm:text-4xl font-bold text-black mb-2">
+                Админ самбар
+              </h1>
+              <p className="text-black">
+                Дэлгүүрийн бүтээгдэхүүн, хэрэглэгчдийг удирдах
+              </p>
+            </div>
+
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
+              <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-black text-sm">Нийт бүтээгдэхүүн</p>
+                    <p className="text-3xl font-bold mt-1 text-black">
+                      {stats.totalProducts}
+                    </p>
+                  </div>
+                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center text-2xl">
+                    📦
+                  </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-black group-hover:text-gray-600 transition-colors">
-                    {collection.title}
-                  </h3>
-                  <p className="text-black mt-1">
-                    {collection.count} бүтээгдэхүүн
-                  </p>
-                  <div className="mt-4 flex items-center text-black font-medium">
+              </div>
+              <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-black text-sm">Эрэгтэй</p>
+                    <p className="text-3xl font-bold mt-1 text-black">
+                      {stats.maleProducts}
+                    </p>
+                  </div>
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center text-2xl">
+                    👔
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-black text-sm">Эмэгтэй</p>
+                    <p className="text-3xl font-bold mt-1 text-black">
+                      {stats.femaleProducts}
+                    </p>
+                  </div>
+                  <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-pink-600 rounded-lg flex items-center justify-center text-2xl">
+                    👗
+                  </div>
+                </div>
+              </div>
+              <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-black text-sm">Хүүхэд</p>
+                    <p className="text-3xl font-bold mt-1 text-black">
+                      {stats.childrenProducts}
+                    </p>
+                  </div>
+                  <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-lg flex items-center justify-center text-2xl">
+                    🎒
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Collections Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              {collections.map((collection) => (
+                <Link
+                  key={collection.href}
+                  href={collection.href}
+                  className="group bg-white border border-gray-200 rounded-xl shadow-sm p-6 hover:shadow-md transition-all"
+                >
+                  <div className="flex items-center space-x-4 mb-4">
+                    <div className="text-4xl">{collection.icon}</div>
+                    <div>
+                      <h3 className="text-lg font-bold text-black">
+                        {collection.title}
+                      </h3>
+                      <p className="text-black text-sm">
+                        {collection.count} бүтээгдэхүүн
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center text-black font-medium text-sm">
                     Удирдах
                     <svg
-                      className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform"
+                      className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -160,79 +199,12 @@ export default function AdminDashboard() {
                       />
                     </svg>
                   </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          {/* Quick Actions */}
-          <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
-            <h2 className="text-2xl font-bold mb-4 text-black">Хурдан үйлдлүүд</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-              <Link
-                href="/admin/orders"
-                className="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-black transition-colors"
-              >
-                <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
-                  📦
-                </div>
-                <div>
-                  <p className="font-semibold text-black">Захиалга</p>
-                  <p className="text-sm text-black">Удирдах</p>
-                </div>
-              </Link>
-              <Link
-                href="/admin/users"
-                className="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-black transition-colors"
-              >
-                <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
-                  👥
-                </div>
-                <div>
-                  <p className="font-semibold text-black">Хэрэглэгч</p>
-                  <p className="text-sm text-black">Удирдах</p>
-                </div>
-              </Link>
-              <Link
-                href="/admin/support"
-                className="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-black transition-colors"
-              >
-                <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
-                  💬
-                </div>
-                <div>
-                  <p className="font-semibold text-black">Дэмжлэг</p>
-                  <p className="text-sm text-black">Tickets</p>
-                </div>
-              </Link>
-              <Link
-                href="/admin/categories"
-                className="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-black transition-colors"
-              >
-                <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
-                  🏷️
-                </div>
-                <div>
-                  <p className="font-semibold text-black">Ангилал</p>
-                  <p className="text-sm text-black">Удирдах</p>
-                </div>
-              </Link>
-              <Link
-                href="/"
-                className="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-black transition-colors"
-              >
-                <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
-                  🏠
-                </div>
-                <div>
-                  <p className="font-semibold text-black">Дэлгүүр</p>
-                  <p className="text-sm text-black">Үзэх</p>
-                </div>
-              </Link>
+                </Link>
+              ))}
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </>
   );
 }

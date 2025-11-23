@@ -7,6 +7,7 @@
     "dev": "ts-node src/server.ts",
     "prestart": "npm run build",
     "start": "node dist/server.js",
+    "migrate:about": "ts-node src/scripts/migrateAbout.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

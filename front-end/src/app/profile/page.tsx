@@ -41,15 +41,15 @@ export default function ProfilePage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-gray-50 py-8 sm:py-12">
+      <main className="min-h-screen bg-white py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* User Info Section */}
-          <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6 sm:mb-8">
+          <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-4 sm:p-6 mb-6 sm:mb-8">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="flex items-center space-x-4">
                 <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center">
                   <svg
-                    className="w-12 h-12 text-gray-400"
+                    className="w-12 h-12 text-black"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -57,11 +57,11 @@ export default function ProfilePage() {
                   </svg>
                 </div>
                 <div>
-                  <h1 className="text-3xl font-bold text-gray-900">
+                  <h1 className="text-3xl font-bold text-black">
                     {user.name}
                   </h1>
-                  <p className="text-gray-600">{user.email}</p>
-                  <span className="inline-block mt-1 px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">
+                  <p className="text-black">{user.email}</p>
+                  <span className="inline-block mt-1 px-3 py-1 bg-gray-100 text-black text-sm rounded-full border border-gray-200">
                     {user.role}
                   </span>
                 </div>
@@ -69,7 +69,7 @@ export default function ProfilePage() {
               <div className="flex gap-2">
                 <Link
                   href="/orders"
-                  className="bg-gray-200 text-gray-800 px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-gray-300 text-sm sm:text-base"
+                  className="bg-gray-200 text-black px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-gray-300 text-sm sm:text-base border border-gray-300"
                 >
                   Захиалгууд
                 </Link>
@@ -85,25 +85,25 @@ export default function ProfilePage() {
 
           {/* Cart Section */}
           <section className="mb-8">
-            <h2 className="text-2xl font-bold mb-4">
+            <h2 className="text-2xl font-bold mb-4 text-black">
               Shopping Cart ({cart.length})
             </h2>
             {cart.length > 0 ? (
-              <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
+              <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-4 sm:p-6">
                 <div className="space-y-4">
                   {cart.map((item) => (
                     <div
                       key={item.id}
-                      className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b pb-4 gap-4"
+                      className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-gray-200 pb-4 gap-4"
                     >
                       <div className="flex items-center space-x-4 flex-1">
                         <div className="w-20 h-20 bg-gray-100 rounded flex-shrink-0"></div>
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold truncate">
+                          <h3 className="font-semibold truncate text-black">
                             {item.name}
                           </h3>
-                          <p className="text-gray-600">${item.price}</p>
-                          <span className="text-xs text-gray-500">
+                          <p className="text-black">${item.price}</p>
+                          <span className="text-xs text-black">
                             {item.category}
                           </span>
                         </div>
@@ -114,23 +114,23 @@ export default function ProfilePage() {
                             onClick={() =>
                               updateCartQuantity(item.id, item.quantity - 1)
                             }
-                            className="w-8 h-8 bg-gray-200 rounded hover:bg-gray-300 flex items-center justify-center"
+                            className="w-8 h-8 bg-gray-200 rounded hover:bg-gray-300 flex items-center justify-center text-black font-semibold"
                           >
                             -
                           </button>
-                          <span className="px-3 sm:px-4 font-medium">
+                          <span className="px-3 sm:px-4 font-medium text-black">
                             {item.quantity}
                           </span>
                           <button
                             onClick={() =>
                               updateCartQuantity(item.id, item.quantity + 1)
                             }
-                            className="w-8 h-8 bg-gray-200 rounded hover:bg-gray-300 flex items-center justify-center"
+                            className="w-8 h-8 bg-gray-200 rounded hover:bg-gray-300 flex items-center justify-center text-black font-semibold"
                           >
                             +
                           </button>
                         </div>
-                        <p className="font-semibold text-right">
+                        <p className="font-semibold text-right text-black">
                           ${(item.price * item.quantity).toFixed(2)}
                         </p>
                         <button
@@ -158,9 +158,9 @@ export default function ProfilePage() {
                     </div>
                   ))}
                 </div>
-                <div className="mt-6 flex justify-between items-center pt-4 border-t">
-                  <p className="text-xl font-bold">Total:</p>
-                  <p className="text-2xl font-bold">${cartTotal.toFixed(2)}</p>
+                <div className="mt-6 flex justify-between items-center pt-4 border-t border-gray-200">
+                  <p className="text-xl font-bold text-black">Total:</p>
+                  <p className="text-2xl font-bold text-black">${cartTotal.toFixed(2)}</p>
                 </div>
                 <Link
                   href="/checkout"
@@ -170,10 +170,10 @@ export default function ProfilePage() {
                 </Link>
               </div>
             ) : (
-              <div className="bg-white rounded-lg shadow-md p-12 text-center">
+              <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-12 text-center">
                 <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg
-                    className="w-12 h-12 text-gray-400"
+                    className="w-12 h-12 text-black"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -186,10 +186,10 @@ export default function ProfilePage() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">
+                <h3 className="text-xl font-semibold mb-2 text-black">
                   Таны сагс хоосон байна
                 </h3>
-                <p className="text-gray-500 mb-6">
+                <p className="text-black mb-6">
                   Бүтээгдэхүүн сонгож эхлээрэй!
                 </p>
                 <Link
@@ -204,7 +204,7 @@ export default function ProfilePage() {
 
           {/* Wishlist Section */}
           <section className="mb-8">
-            <h2 className="text-2xl font-bold mb-4">
+            <h2 className="text-2xl font-bold mb-4 text-black">
               Wishlist ({wishlist.length})
             </h2>
             {wishlist.length > 0 ? (
@@ -212,11 +212,11 @@ export default function ProfilePage() {
                 {wishlist.map((product) => (
                   <div
                     key={product.id}
-                    className="bg-white rounded-lg shadow-md p-4"
+                    className="bg-white border border-gray-200 rounded-lg shadow-sm p-4"
                   >
                     <div className="w-full aspect-square bg-gray-100 rounded mb-3"></div>
-                    <h3 className="font-semibold">{product.name}</h3>
-                    <p className="text-gray-600 mb-3">${product.price}</p>
+                    <h3 className="font-semibold text-black">{product.name}</h3>
+                    <p className="text-black mb-3">${product.price}</p>
                     <div className="flex gap-2">
                       <button
                         onClick={() => {
@@ -253,10 +253,10 @@ export default function ProfilePage() {
                 ))}
               </div>
             ) : (
-              <div className="bg-white rounded-lg shadow-md p-12 text-center">
+              <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-12 text-center">
                 <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg
-                    className="w-12 h-12 text-gray-400"
+                    className="w-12 h-12 text-black"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -269,10 +269,10 @@ export default function ProfilePage() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">
+                <h3 className="text-xl font-semibold mb-2 text-black">
                   Хүслийн жагсаалт хоосон байна
                 </h3>
-                <p className="text-gray-500 mb-6">
+                <p className="text-black mb-6">
                   Таалагдсан бүтээгдэхүүнүүдээ энд хадгална уу
                 </p>
                 <Link
@@ -287,7 +287,7 @@ export default function ProfilePage() {
 
           {/* Favorites Section */}
           <section className="mb-8">
-            <h2 className="text-2xl font-bold mb-4">
+            <h2 className="text-2xl font-bold mb-4 text-black">
               Favorites ({favorites.length})
             </h2>
             {favorites.length > 0 ? (
@@ -295,11 +295,11 @@ export default function ProfilePage() {
                 {favorites.map((product) => (
                   <div
                     key={product.id}
-                    className="bg-white rounded-lg shadow-md p-4"
+                    className="bg-white border border-gray-200 rounded-lg shadow-sm p-4"
                   >
                     <div className="w-full aspect-square bg-gray-100 rounded mb-3"></div>
-                    <h3 className="font-semibold">{product.name}</h3>
-                    <p className="text-gray-600 mb-3">${product.price}</p>
+                    <h3 className="font-semibold text-black">{product.name}</h3>
+                    <p className="text-black mb-3">${product.price}</p>
                     <div className="flex gap-2">
                       <button
                         onClick={() => {
@@ -336,10 +336,10 @@ export default function ProfilePage() {
                 ))}
               </div>
             ) : (
-              <div className="bg-white rounded-lg shadow-md p-12 text-center">
+              <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-12 text-center">
                 <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg
-                    className="w-12 h-12 text-gray-400"
+                    className="w-12 h-12 text-black"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -352,10 +352,10 @@ export default function ProfilePage() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">
+                <h3 className="text-xl font-semibold mb-2 text-black">
                   Дуртай бүтээгдэхүүн байхгүй
                 </h3>
-                <p className="text-gray-500 mb-6">
+                <p className="text-black mb-6">
                   Онцгой бүтээгдэхүүнүүдээ тэмдэглээрэй
                 </p>
                 <Link
@@ -370,7 +370,7 @@ export default function ProfilePage() {
 
           {/* Recently Viewed Section */}
           <section>
-            <h2 className="text-2xl font-bold mb-4">
+            <h2 className="text-2xl font-bold mb-4 text-black">
               Recently Viewed ({recentlyViewed.length})
             </h2>
             {recentlyViewed.length > 0 ? (
@@ -378,21 +378,21 @@ export default function ProfilePage() {
                 {recentlyViewed.map((product) => (
                   <div
                     key={product.id}
-                    className="bg-white rounded-lg shadow-md p-3"
+                    className="bg-white border border-gray-200 rounded-lg shadow-sm p-3"
                   >
                     <div className="w-full aspect-square bg-gray-100 rounded mb-2"></div>
-                    <h3 className="font-semibold text-sm truncate">
+                    <h3 className="font-semibold text-sm truncate text-black">
                       {product.name}
                     </h3>
-                    <p className="text-gray-600 text-sm">${product.price}</p>
+                    <p className="text-black text-sm">${product.price}</p>
                   </div>
                 ))}
               </div>
             ) : (
-              <div className="bg-white rounded-lg shadow-md p-12 text-center">
+              <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-12 text-center">
                 <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg
-                    className="w-12 h-12 text-gray-400"
+                    className="w-12 h-12 text-black"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -411,10 +411,10 @@ export default function ProfilePage() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">
+                <h3 className="text-xl font-semibold mb-2 text-black">
                   Үзсэн түүх хоосон байна
                 </h3>
-                <p className="text-gray-500 mb-6">
+                <p className="text-black mb-6">
                   Та үзсэн бүтээгдэхүүнүүд энд харагдана
                 </p>
                 <Link

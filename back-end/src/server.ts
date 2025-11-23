@@ -8,16 +8,17 @@ import ordersRouter from "./services/orders";
 import reviewsRouter from "./services/reviews";
 import ticketsRouter from "./services/tickets";
 import categoriesRouter from "./services/categories";
+import aboutRouter from "./services/about";
 
 dotenv.config();
 
 const app = express();
 
 // Connect to MongoDB
-// Optional connect if URI exists, otherwise continue with mock data
-if (process.env.MONGODB_URI) {
-  connectDB();
-}
+connectDB().catch((error) => {
+  console.error("Failed to connect to MongoDB:", error);
+  process.exit(1);
+});
 
 // Middleware
 app.use(cors());
@@ -45,6 +46,7 @@ app.use("/api/orders", ordersRouter);
 app.use("/api/reviews", reviewsRouter);
 app.use("/api/tickets", ticketsRouter);
 app.use("/api/categories", categoriesRouter);
+app.use("/api/about", aboutRouter);
 
 const PORT = process.env.PORT || 4000;
 
