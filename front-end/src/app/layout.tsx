@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ANAR SHOP - Fashion for Everyone",
-  description: "Quality clothing for men, women, and children",
+  title: "ANAR SHOP - Хүн бүрт зориулсан хувцаслалт",
+  description: "Эрэгтэй, эмэгтэй, хүүхдийн чанартай хувцас",
 };
 
 export default function RootLayout({
@@ -27,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="mn">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors`}
       >

@@ -7,19 +7,19 @@ export const dynamic = "force-dynamic";
 export default function ProductsPage() {
   const collections = [
     {
-      name: "Male",
+      name: "Эрэгтэй",
       href: "/collections/male",
-      description: "Discover our men&apos;s fashion collection",
+      description: "Эрэгтэйчүүдийн хувцаслалтын цуглуулга",
     },
     {
-      name: "Female",
+      name: "Эмэгтэй",
       href: "/collections/female",
-      description: "Explore elegant women&apos;s fashion",
+      description: "Эмэгтэйчүүдийн гоё сайхан хувцаслалт",
     },
     {
-      name: "Children",
+      name: "Хүүхэд",
       href: "/collections/children",
-      description: "Fun and comfortable kids clothing",
+      description: "Хүүхдийн тав тухтай хувцас",
     },
   ];
 
@@ -31,10 +31,10 @@ export default function ProductsPage() {
         <div className="bg-white border-b border-gray-200 py-12 sm:py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-black">
-              Our Collections
+              Манай цуглуулгууд
             </h1>
             <p className="text-black text-base sm:text-lg">
-              Choose a category to explore our products
+              Бүтээгдэхүүн үзэхийн тулд ангилал сонгоно уу
             </p>
           </div>
         </div>
@@ -58,7 +58,7 @@ export default function ProductsPage() {
                       {collection.description}
                     </p>
                     <div className="flex items-center text-black font-medium mt-auto">
-                      Shop Now
+                      Одоо худалдаж авах
                       <svg
                         className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform"
                         fill="none"

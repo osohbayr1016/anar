@@ -58,10 +58,10 @@ export default function SignupPage() {
       <div className="max-w-md w-full space-y-6 sm:space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl sm:text-4xl font-bold text-gray-900">
-            Create your account
+            Бүртгэл үүсгэх
           </h2>
           <p className="mt-2 text-center text-sm sm:text-base text-gray-600">
-            Join ANAR SHOP today
+            Өнөөдөр ANAR SHOP-д нэгдээрэй
           </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
@@ -71,7 +71,7 @@ export default function SignupPage() {
                 htmlFor="name"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
-                Full name
+                Бүтэн нэр
               </label>
               <input
                 id="name"
@@ -81,7 +81,7 @@ export default function SignupPage() {
                 value={formData.name}
                 onChange={handleChange}
                 className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-                placeholder="Enter your name"
+                placeholder="Нэрээ оруулна уу"
               />
             </div>
             <div>
@@ -89,7 +89,7 @@ export default function SignupPage() {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
-                Email address
+                Имэйл хаяг
               </label>
               <input
                 id="email"
@@ -99,7 +99,7 @@ export default function SignupPage() {
                 value={formData.email}
                 onChange={handleChange}
                 className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-                placeholder="Enter your email"
+                placeholder="Имэйл хаягаа оруулна уу"
               />
             </div>
             <div>
@@ -107,7 +107,7 @@ export default function SignupPage() {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
-                Password
+                Нууц үг
               </label>
               <input
                 id="password"
@@ -117,7 +117,7 @@ export default function SignupPage() {
                 value={formData.password}
                 onChange={handleChange}
                 className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-                placeholder="At least 6 characters"
+                placeholder="Хамгийн багадаа 6 тэмдэгт"
               />
             </div>
             <div>
@@ -125,7 +125,7 @@ export default function SignupPage() {
                 htmlFor="confirmPassword"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
-                Confirm password
+                Нууц үг баталгаажуулах
               </label>
               <input
                 id="confirmPassword"
@@ -135,7 +135,7 @@ export default function SignupPage() {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-                placeholder="Re-enter your password"
+                placeholder="Нууц үгээ дахин оруулна уу"
               />
             </div>
           </div>
@@ -146,18 +146,18 @@ export default function SignupPage() {
               disabled={loading}
               className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? "Creating account..." : "Create account"}
+              {loading ? "Бүртгэл үүсгэж байна..." : "Бүртгэл үүсгэх"}
             </button>
           </div>
 
           <div className="text-center">
             <p className="text-sm text-gray-600">
-              Already have an account?{" "}
+              Аль хэдийн бүртгэлтэй юу?{" "}
               <Link
                 href="/auth/login"
                 className="font-medium text-black hover:underline"
               >
-                Sign in
+                Нэвтрэх
               </Link>
             </p>
           </div>
@@ -167,7 +167,7 @@ export default function SignupPage() {
               href="/"
               className="text-sm text-gray-600 hover:text-black underline"
             >
-              Back to shop
+              Дэлгүүр рүү буцах
             </Link>
           </div>
         </form>

@@ -193,7 +193,9 @@ export default function ProductDetailPage() {
         <Header />
         <div className="min-h-screen flex items-center justify-center bg-white">
           <div className="text-center">
-            <h2 className="text-2xl font-bold mb-4 text-black">Бүтээгдэхүүн олдсонгүй</h2>
+            <h2 className="text-2xl font-bold mb-4 text-black">
+              Бүтээгдэхүүн олдсонгүй
+            </h2>
             <Link href="/products" className="text-black hover:underline">
               Бүх бүтээгдэхүүн үзэх
             </Link>
@@ -222,7 +224,11 @@ export default function ProductDetailPage() {
               href={`/collections/${product.category.toLowerCase()}`}
               className="hover:text-gray-600"
             >
-              {product.category}
+              {product.category === "Male"
+                ? "Эрэгтэй"
+                : product.category === "Female"
+                ? "Эмэгтэй"
+                : "Хүүхэд"}
             </Link>
             <span className="text-gray-400">/</span>
             <span className="text-black font-medium">{product.name}</span>
@@ -255,7 +261,12 @@ export default function ProductDetailPage() {
                 {product.name}
               </h1>
               <p className="text-black mb-4">
-                {product.category} Collection
+                {product.category === "Male"
+                  ? "Эрэгтэй"
+                  : product.category === "Female"
+                  ? "Эмэгтэй"
+                  : "Хүүхэд"}{" "}
+                цуглуулга
               </p>
               <div className="flex items-center space-x-2 sm:space-x-4 mb-6">
                 <div className="flex items-center">
@@ -478,7 +489,9 @@ export default function ProductDetailPage() {
                   >
                     <div className="flex items-start justify-between mb-2">
                       <div>
-                        <p className="font-semibold text-black">{review.userName}</p>
+                        <p className="font-semibold text-black">
+                          {review.userName}
+                        </p>
                         <p className="text-xs text-black">
                           {new Date(review.createdAt).toLocaleDateString()}
                         </p>

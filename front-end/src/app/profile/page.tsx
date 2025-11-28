@@ -57,9 +57,7 @@ export default function ProfilePage() {
                   </svg>
                 </div>
                 <div>
-                  <h1 className="text-3xl font-bold text-black">
-                    {user.name}
-                  </h1>
+                  <h1 className="text-3xl font-bold text-black">{user.name}</h1>
                   <p className="text-black">{user.email}</p>
                   <span className="inline-block mt-1 px-3 py-1 bg-gray-100 text-black text-sm rounded-full border border-gray-200">
                     {user.role}
@@ -86,7 +84,7 @@ export default function ProfilePage() {
           {/* Cart Section */}
           <section className="mb-8">
             <h2 className="text-2xl font-bold mb-4 text-black">
-              Shopping Cart ({cart.length})
+              Худалдан авах сагс ({cart.length})
             </h2>
             {cart.length > 0 ? (
               <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-4 sm:p-6">
@@ -104,7 +102,11 @@ export default function ProfilePage() {
                           </h3>
                           <p className="text-black">${item.price}</p>
                           <span className="text-xs text-black">
-                            {item.category}
+                            {item.category === "Male"
+                              ? "Эрэгтэй"
+                              : item.category === "Female"
+                              ? "Эмэгтэй"
+                              : "Хүүхэд"}
                           </span>
                         </div>
                       </div>
@@ -159,14 +161,16 @@ export default function ProfilePage() {
                   ))}
                 </div>
                 <div className="mt-6 flex justify-between items-center pt-4 border-t border-gray-200">
-                  <p className="text-xl font-bold text-black">Total:</p>
-                  <p className="text-2xl font-bold text-black">${cartTotal.toFixed(2)}</p>
+                  <p className="text-xl font-bold text-black">Нийт:</p>
+                  <p className="text-2xl font-bold text-black">
+                    ${cartTotal.toFixed(2)}
+                  </p>
                 </div>
                 <Link
                   href="/checkout"
                   className="block w-full mt-4 bg-black text-white py-3 rounded-lg hover:bg-gray-800 text-center font-semibold"
                 >
-                  Proceed to Checkout
+                  Захиалга руу шилжих
                 </Link>
               </div>
             ) : (
@@ -189,9 +193,7 @@ export default function ProfilePage() {
                 <h3 className="text-xl font-semibold mb-2 text-black">
                   Таны сагс хоосон байна
                 </h3>
-                <p className="text-black mb-6">
-                  Бүтээгдэхүүн сонгож эхлээрэй!
-                </p>
+                <p className="text-black mb-6">Бүтээгдэхүүн сонгож эхлээрэй!</p>
                 <Link
                   href="/products"
                   className="inline-block bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors"
@@ -205,7 +207,7 @@ export default function ProfilePage() {
           {/* Wishlist Section */}
           <section className="mb-8">
             <h2 className="text-2xl font-bold mb-4 text-black">
-              Wishlist ({wishlist.length})
+              Хүслийн жагсаалт ({wishlist.length})
             </h2>
             {wishlist.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -225,7 +227,7 @@ export default function ProfilePage() {
                         }}
                         className="flex-1 bg-black text-white px-3 py-2 rounded text-sm hover:bg-gray-800"
                       >
-                        Add to Cart
+                        Сагсанд нэмэх
                       </button>
                       <button
                         onClick={() => {
@@ -288,7 +290,7 @@ export default function ProfilePage() {
           {/* Favorites Section */}
           <section className="mb-8">
             <h2 className="text-2xl font-bold mb-4 text-black">
-              Favorites ({favorites.length})
+              Дуртай ({favorites.length})
             </h2>
             {favorites.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -308,7 +310,7 @@ export default function ProfilePage() {
                         }}
                         className="flex-1 bg-black text-white px-3 py-2 rounded text-sm hover:bg-gray-800"
                       >
-                        Add to Cart
+                        Сагсанд нэмэх
                       </button>
                       <button
                         onClick={() => {
@@ -371,7 +373,7 @@ export default function ProfilePage() {
           {/* Recently Viewed Section */}
           <section>
             <h2 className="text-2xl font-bold mb-4 text-black">
-              Recently Viewed ({recentlyViewed.length})
+              Сүүлд үзсэн ({recentlyViewed.length})
             </h2>
             {recentlyViewed.length > 0 ? (
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">

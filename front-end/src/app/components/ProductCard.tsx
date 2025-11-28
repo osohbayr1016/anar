@@ -42,7 +42,11 @@ export default function ProductCard({ product }: ProductCardProps) {
         />
         {product.category && (
           <div className="absolute top-2 right-2 bg-white px-2 py-1 rounded-lg text-xs font-medium text-gray-700 shadow-sm">
-            {product.category}
+            {product.category === "Male"
+              ? "Эрэгтэй"
+              : product.category === "Female"
+              ? "Эмэгтэй"
+              : "Хүүхэд"}
           </div>
         )}
       </div>
@@ -54,7 +58,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         onClick={handleAddToCart}
         className="w-full bg-black text-white px-4 py-2 text-sm font-medium hover:bg-gray-800 transition-all duration-300 ease-in-out rounded-lg"
       >
-        Add to Cart
+        Сагсанд нэмэх
       </button>
     </article>
   );

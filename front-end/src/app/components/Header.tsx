@@ -59,7 +59,10 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="text-2xl font-bold text-black flex-shrink-0">
+          <Link
+            href="/"
+            className="text-2xl font-bold text-black flex-shrink-0"
+          >
             ANAR SHOP
           </Link>
 
@@ -69,16 +72,16 @@ export default function Header() {
               href="/products"
               className="text-sm font-medium text-gray-700 hover:text-black transition-colors border-b-2 border-transparent hover:border-black"
             >
-              Latest Drops
+              Шинэ бүтээгдэхүүн
             </Link>
-            
+
             {/* Shop Dropdown */}
             <div className="relative" ref={shopDropdownRef}>
               <button
                 onClick={() => setShopDropdownOpen(!shopDropdownOpen)}
                 className="text-sm font-medium text-gray-700 hover:text-black transition-colors flex items-center space-x-1 border-b-2 border-transparent hover:border-black"
               >
-                <span>Shop</span>
+                <span>Дэлгүүр</span>
                 <svg
                   className={`w-3 h-3 transition-transform ${
                     shopDropdownOpen ? "rotate-180" : ""
@@ -103,7 +106,7 @@ export default function Header() {
                     {/* Apparel Column */}
                     <div>
                       <h3 className="font-semibold text-sm text-gray-900 mb-4">
-                        Apparel
+                        Хувцас
                       </h3>
                       <ul className="space-y-3">
                         <li>
@@ -112,7 +115,7 @@ export default function Header() {
                             onClick={() => setShopDropdownOpen(false)}
                             className="text-sm text-gray-600 hover:text-black transition-colors"
                           >
-                            Best Sellers
+                            Хамгийн их борлуулалт
                           </Link>
                         </li>
                         <li>
@@ -121,7 +124,7 @@ export default function Header() {
                             onClick={() => setShopDropdownOpen(false)}
                             className="text-sm text-gray-600 hover:text-black transition-colors"
                           >
-                            Male
+                            Эрэгтэй
                           </Link>
                         </li>
                         <li>
@@ -130,7 +133,7 @@ export default function Header() {
                             onClick={() => setShopDropdownOpen(false)}
                             className="text-sm text-gray-600 hover:text-black transition-colors"
                           >
-                            Female
+                            Эмэгтэй
                           </Link>
                         </li>
                         <li>
@@ -139,7 +142,7 @@ export default function Header() {
                             onClick={() => setShopDropdownOpen(false)}
                             className="text-sm text-gray-600 hover:text-black transition-colors"
                           >
-                            Kids
+                            Хүүхэд
                           </Link>
                         </li>
                         <li>
@@ -148,7 +151,7 @@ export default function Header() {
                             onClick={() => setShopDropdownOpen(false)}
                             className="text-sm text-gray-600 hover:text-black transition-colors"
                           >
-                            All
+                            Бүгд
                           </Link>
                         </li>
                       </ul>
@@ -157,7 +160,7 @@ export default function Header() {
                     {/* Accessories Column */}
                     <div>
                       <h3 className="font-semibold text-sm text-gray-900 mb-4">
-                        Collections
+                        Цуглуулга
                       </h3>
                       <ul className="space-y-3">
                         <li>
@@ -166,7 +169,7 @@ export default function Header() {
                             onClick={() => setShopDropdownOpen(false)}
                             className="text-sm text-gray-600 hover:text-black transition-colors"
                           >
-                            Male Collection
+                            Эрэгтэй цуглуулга
                           </Link>
                         </li>
                         <li>
@@ -175,7 +178,7 @@ export default function Header() {
                             onClick={() => setShopDropdownOpen(false)}
                             className="text-sm text-gray-600 hover:text-black transition-colors"
                           >
-                            Female Collection
+                            Эмэгтэй цуглуулга
                           </Link>
                         </li>
                         <li>
@@ -184,7 +187,7 @@ export default function Header() {
                             onClick={() => setShopDropdownOpen(false)}
                             className="text-sm text-gray-600 hover:text-black transition-colors"
                           >
-                            Children Collection
+                            Хүүхдийн цуглуулга
                           </Link>
                         </li>
                       </ul>
@@ -193,7 +196,7 @@ export default function Header() {
                     {/* All Products */}
                     <div>
                       <h3 className="font-semibold text-sm text-gray-900 mb-4">
-                        View All
+                        Бүгдийг харах
                       </h3>
                       <ul className="space-y-3">
                         <li>
@@ -202,7 +205,7 @@ export default function Header() {
                             onClick={() => setShopDropdownOpen(false)}
                             className="text-sm text-gray-600 hover:text-black transition-colors"
                           >
-                            All Products
+                            Бүх бүтээгдэхүүн
                           </Link>
                         </li>
                         {user && user.role === "admin" && (
@@ -227,19 +230,19 @@ export default function Header() {
               href="/sale"
               className="text-sm font-medium text-gray-700 hover:text-black transition-colors border-b-2 border-transparent hover:border-black"
             >
-              Sale
+              Хямдрал
             </Link>
             <Link
               href="/about"
               className="text-sm font-medium text-gray-700 hover:text-black transition-colors border-b-2 border-transparent hover:border-black"
             >
-              About
+              Бидний тухай
             </Link>
             <Link
               href="/reviews"
               className="text-sm font-medium text-gray-700 hover:text-black transition-colors border-b-2 border-transparent hover:border-black"
             >
-              Reviews
+              Үнэлгээ
             </Link>
           </nav>
 
@@ -301,19 +304,22 @@ export default function Header() {
                       onClick={() => setMobileMenuOpen(false)}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
-                      My Profile
+                      Миний профайл
                     </Link>
                     <button
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
-                      Logout
+                      Гарах
                     </button>
                   </div>
                 )}
               </div>
             ) : (
-              <Link href="/auth/login" className="text-gray-700 hover:text-black p-2 flex items-center justify-center">
+              <Link
+                href="/auth/login"
+                className="text-gray-700 hover:text-black p-2 flex items-center justify-center"
+              >
                 <svg
                   className="w-5 h-5"
                   fill="none"
@@ -331,7 +337,10 @@ export default function Header() {
             )}
 
             {/* Cart */}
-            <Link href="/profile" className="text-gray-700 hover:text-black relative p-2 flex items-center justify-center">
+            <Link
+              href="/profile"
+              className="text-gray-700 hover:text-black relative p-2 flex items-center justify-center"
+            >
               <svg
                 className="w-5 h-5"
                 fill="none"
@@ -391,7 +400,7 @@ export default function Header() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search products..."
+                placeholder="Бүтээгдэхүүн хайх..."
                 className="flex-1 border border-gray-300 rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black"
                 autoFocus
               />
@@ -399,7 +408,7 @@ export default function Header() {
                 type="submit"
                 className="bg-black text-white px-6 py-2 rounded-r-lg hover:bg-gray-800"
               >
-                Search
+                Хайх
               </button>
             </form>
           </div>
@@ -414,14 +423,14 @@ export default function Header() {
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-sm font-medium text-gray-700"
               >
-                Latest Drops
+                Шинэ бүтээгдэхүүн
               </Link>
               <div>
                 <button
                   onClick={() => setShopDropdownOpen(!shopDropdownOpen)}
                   className="text-sm font-medium text-gray-700 flex items-center space-x-1"
                 >
-                  <span>Shop</span>
+                  <span>Дэлгүүр</span>
                   <svg
                     className={`w-3 h-3 transition-transform ${
                       shopDropdownOpen ? "rotate-180" : ""
@@ -448,7 +457,7 @@ export default function Header() {
                       }}
                       className="block text-sm text-gray-600"
                     >
-                      Male
+                      Эрэгтэй
                     </Link>
                     <Link
                       href="/collections/female"
@@ -458,7 +467,7 @@ export default function Header() {
                       }}
                       className="block text-sm text-gray-600"
                     >
-                      Female
+                      Эмэгтэй
                     </Link>
                     <Link
                       href="/collections/children"
@@ -468,7 +477,7 @@ export default function Header() {
                       }}
                       className="block text-sm text-gray-600"
                     >
-                      Kids
+                      Хүүхэд
                     </Link>
                     <Link
                       href="/products"
@@ -478,7 +487,7 @@ export default function Header() {
                       }}
                       className="block text-sm text-gray-600"
                     >
-                      All Products
+                      Бүх бүтээгдэхүүн
                     </Link>
                   </div>
                 )}
@@ -488,35 +497,35 @@ export default function Header() {
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-sm font-medium text-gray-700"
               >
-                Sale
+                Хямдрал
               </Link>
               <Link
                 href="/about"
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-sm font-medium text-gray-700"
               >
-                About
+                Бидний тухай
               </Link>
               <Link
                 href="/reviews"
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-sm font-medium text-gray-700"
               >
-                Reviews
+                Үнэлгээ
               </Link>
               <form onSubmit={handleSearch} className="flex">
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search..."
+                  placeholder="Хайх..."
                   className="flex-1 border border-gray-300 rounded-l-lg px-3 py-2 text-sm"
                 />
                 <button
                   type="submit"
                   className="bg-black text-white px-4 py-2 rounded-r-lg text-sm"
                 >
-                  Search
+                  Хайх
                 </button>
               </form>
               {user ? (
@@ -526,7 +535,7 @@ export default function Header() {
                     onClick={() => setMobileMenuOpen(false)}
                     className="text-sm text-gray-700"
                   >
-                    My Profile
+                    Миний профайл
                   </Link>
                   <button
                     onClick={() => {
@@ -535,7 +544,7 @@ export default function Header() {
                     }}
                     className="text-left text-sm text-gray-700"
                   >
-                    Logout
+                    Гарах
                   </button>
                 </>
               ) : (
@@ -544,7 +553,7 @@ export default function Header() {
                   className="text-sm text-gray-700"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Login / Sign up
+                  Нэвтрэх / Бүртгүүлэх
                 </Link>
               )}
               <Link
@@ -552,7 +561,7 @@ export default function Header() {
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-sm text-gray-700"
               >
-                Cart ({cartCount})
+                Сагс ({cartCount})
               </Link>
             </nav>
           </div>

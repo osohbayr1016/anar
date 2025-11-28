@@ -99,11 +99,20 @@ export default function CollectionPage({
               Нүүр
             </Link>
             <span className="text-gray-400">/</span>
-            <Link href="/products" className="hover:text-gray-600 transition-colors">
+            <Link
+              href="/products"
+              className="hover:text-gray-600 transition-colors"
+            >
               Бүтээгдэхүүн
             </Link>
             <span className="text-gray-400">/</span>
-            <span className="text-black font-medium">{category}</span>
+            <span className="text-black font-medium">
+              {category === "Male"
+                ? "Эрэгтэй"
+                : category === "Female"
+                ? "Эмэгтэй"
+                : "Хүүхэд"}
+            </span>
           </nav>
           <h1 className="text-5xl font-bold mb-4 text-black">{title}</h1>
           <p className="text-black text-lg">{description}</p>
@@ -148,7 +157,9 @@ export default function CollectionPage({
 
               {allColors.length > 0 && (
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-black">Өнгө</label>
+                  <label className="block text-sm font-medium mb-2 text-black">
+                    Өнгө
+                  </label>
                   <div className="space-y-2">
                     {allColors.map((color) => (
                       <label

@@ -31,21 +31,21 @@ export default function AdminDashboard() {
 
   const collections = [
     {
-      title: "Male Collection",
+      title: "Эрэгтэй цуглуулга",
       href: "/admin/male",
       count: stats.maleProducts,
       color: "from-blue-500 to-blue-600",
       icon: "👔",
     },
     {
-      title: "Female Collection",
+      title: "Эмэгтэй цуглуулга",
       href: "/admin/female",
       count: stats.femaleProducts,
       color: "from-pink-500 to-pink-600",
       icon: "👗",
     },
     {
-      title: "Children Collection",
+      title: "Хүүхдийн цуглуулга",
       href: "/admin/children",
       count: stats.childrenProducts,
       color: "from-yellow-500 to-yellow-600",
@@ -54,9 +54,24 @@ export default function AdminDashboard() {
   ];
 
   const navItems = [
-    { href: "/admin/male", label: "Эрэгтэй", icon: "👔", count: stats.maleProducts },
-    { href: "/admin/female", label: "Эмэгтэй", icon: "👗", count: stats.femaleProducts },
-    { href: "/admin/children", label: "Хүүхэд", icon: "🎒", count: stats.childrenProducts },
+    {
+      href: "/admin/male",
+      label: "Эрэгтэй",
+      icon: "👔",
+      count: stats.maleProducts,
+    },
+    {
+      href: "/admin/female",
+      label: "Эмэгтэй",
+      icon: "👗",
+      count: stats.femaleProducts,
+    },
+    {
+      href: "/admin/children",
+      label: "Хүүхэд",
+      icon: "🎒",
+      count: stats.childrenProducts,
+    },
     { href: "/admin/about", label: "Бидний тухай", icon: "ℹ️" },
     { href: "/admin/orders", label: "Захиалга", icon: "📦" },
     { href: "/admin/users", label: "Хэрэглэгч", icon: "👥" },
@@ -72,7 +87,9 @@ export default function AdminDashboard() {
         {/* Left Sidebar */}
         <aside className="w-full lg:w-64 bg-white border-b lg:border-b-0 lg:border-r border-gray-200 lg:min-h-screen lg:sticky lg:top-16">
           <div className="p-4 lg:p-6">
-            <h2 className="text-xl font-bold text-black mb-4 lg:mb-6">Админ самбар</h2>
+            <h2 className="text-xl font-bold text-black mb-4 lg:mb-6">
+              Админ самбар
+            </h2>
             <nav className="flex lg:flex-col overflow-x-auto lg:overflow-x-visible space-x-2 lg:space-x-0 lg:space-y-2">
               {navItems.map((item) => (
                 <Link

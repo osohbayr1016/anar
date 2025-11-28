@@ -9,28 +9,27 @@ export default function NotFound() {
           404
         </h1>
         <h2 className="text-3xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
-          Page Not Found
+          Хуудас олдсонгүй
         </h2>
         <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
-          The page you are looking for might have been removed, had its name
-          changed, or is temporarily unavailable.
+          Таны хайж буй хуудас устгагдсан, нэр нь өөрчлөгдсөн эсвэл түр
+          хугацаанд ашиглах боломжгүй байна.
         </p>
         <div className="flex gap-4 justify-center">
           <Link
             href="/"
             className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors"
           >
-            Go Home
+            Нүүр хуудас руу буцах
           </Link>
           <Link
             href="/products"
             className="border border-black dark:border-white text-black dark:text-white px-6 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >
-            Browse Products
+            Бүтээгдэхүүн үзэх
           </Link>
         </div>
       </div>
     </div>
   );
 }
-

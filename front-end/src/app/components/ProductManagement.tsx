@@ -88,20 +88,27 @@ export default function ProductManagement({
   };
 
   if (loading) {
-    return <div className="text-center py-12 text-black">Loading...</div>;
+    return (
+      <div className="text-center py-12 text-black">Ачааллаж байна...</div>
+    );
   }
 
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
         <h2 className="text-xl sm:text-2xl font-bold text-black">
-          {category} Products ({products.length})
+          {category === "Male"
+            ? "Эрэгтэй"
+            : category === "Female"
+            ? "Эмэгтэй"
+            : "Хүүхэд"}{" "}
+          бүтээгдэхүүн ({products.length})
         </h2>
         <button
           onClick={startCreate}
           className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors w-full sm:w-auto"
         >
-          + Add Product
+          + Бүтээгдэхүүн нэмэх
         </button>
       </div>
 
@@ -111,19 +118,19 @@ export default function ProductManagement({
           <thead className="bg-white border-b border-gray-200">
             <tr>
               <th className="px-6 py-4 text-left text-sm font-semibold text-black">
-                Product
+                Бүтээгдэхүүн
               </th>
               <th className="px-6 py-4 text-left text-sm font-semibold text-black">
-                Price
+                Үнэ
               </th>
               <th className="px-6 py-4 text-left text-sm font-semibold text-black">
-                Stock
+                Нөөц
               </th>
               <th className="px-6 py-4 text-left text-sm font-semibold text-black">
-                Colors/Sizes
+                Өнгө/Хэмжээ
               </th>
               <th className="px-6 py-4 text-right text-sm font-semibold text-black">
-                Actions
+                Үйлдлүүд
               </th>
             </tr>
           </thead>
@@ -149,10 +156,12 @@ export default function ProductManagement({
                     </div>
                   </div>
                 </td>
-                <td className="px-6 py-4 font-semibold text-black">${product.price}</td>
+                <td className="px-6 py-4 font-semibold text-black">
+                  ${product.price}
+                </td>
                 <td className="px-6 py-4">
                   <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">
-                    {product.totalStock || 0} units
+                    {product.totalStock || 0} ширхэг
                   </span>
                 </td>
                 <td className="px-6 py-4">
@@ -188,7 +197,7 @@ export default function ProductManagement({
                     onClick={() => startEdit(product)}
                     className="text-black hover:text-gray-600 font-medium transition-colors"
                   >
-                    Edit
+                    Засах
                   </button>
                   <button
                     onClick={() =>
@@ -196,7 +205,7 @@ export default function ProductManagement({
                     }
                     className="text-red-600 hover:text-red-800 font-medium transition-colors"
                   >
-                    Delete
+                    Устгах
                   </button>
                 </td>
               </tr>
@@ -208,7 +217,10 @@ export default function ProductManagement({
       {/* Products Cards - Mobile */}
       <div className="md:hidden space-y-4">
         {products.map((product) => (
-          <div key={product.id} className="bg-white border border-gray-200 rounded-xl shadow-sm p-4">
+          <div
+            key={product.id}
+            className="bg-white border border-gray-200 rounded-xl shadow-sm p-4"
+          >
             <div className="flex gap-4 mb-4">
               <div className="w-20 h-20 bg-gray-100 rounded flex-shrink-0 overflow-hidden">
                 {product.imageUrl && (
@@ -220,16 +232,20 @@ export default function ProductManagement({
                 )}
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold truncate text-black">{product.name}</h3>
+                <h3 className="font-semibold truncate text-black">
+                  {product.name}
+                </h3>
                 <p className="text-sm text-black line-clamp-2">
                   {product.description}
                 </p>
-                <p className="text-lg font-bold mt-1 text-black">${product.price}</p>
+                <p className="text-lg font-bold mt-1 text-black">
+                  ${product.price}
+                </p>
               </div>
             </div>
             <div className="flex items-center justify-between mb-3">
               <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs">
-                {product.totalStock || 0} units
+                {product.totalStock || 0} ширхэг
               </span>
               <div className="flex flex-wrap gap-1">
                 {product.colors?.slice(0, 2).map((c, i) => (
@@ -321,12 +337,10 @@ function ProductFormModal({
   const [colors, setColors] = useState<ColorStock[]>(
     product?.colors || [{ color: "", quantity: 0 }]
   );
-  const [sizes, setSizes] = useState<SizeStock[]>(
-    product?.sizes || []
-  );
+  const [sizes, setSizes] = useState<SizeStock[]>(product?.sizes || []);
   const [imagePreview, setImagePreview] = useState(product?.imageUrl || "");
   const [imageFile, setImageFile] = useState<File | null>(null);
-  
+
   const availableSizes = ["XS", "S", "M", "L", "XL", "XXL"];
 
   // Update priceInput when product changes
@@ -351,15 +365,15 @@ function ProductFormModal({
     const colorStock = colors.reduce((sum, c) => sum + c.quantity, 0);
     const sizeStock = sizes.reduce((sum, s) => sum + s.quantity, 0);
     const totalStock = colorStock + sizeStock;
-    
+
     // Round price to 2 decimal places to avoid floating point errors
     const roundedPrice = Math.round(formData.price * 100) / 100;
-    
+
     const productData = {
       ...formData,
       category,
-      colors: colors.filter(c => c.color && c.quantity > 0),
-      sizes: sizes.filter(s => s.quantity > 0),
+      colors: colors.filter((c) => c.color && c.quantity > 0),
+      sizes: sizes.filter((s) => s.quantity > 0),
       totalStock,
       price: roundedPrice,
     };
@@ -399,7 +413,10 @@ function ProductFormModal({
     const newColors = [...colors];
     if (field === "quantity") {
       const numValue = value === "" ? 0 : Number(value);
-      newColors[index] = { ...newColors[index], [field]: numValue >= 0 ? numValue : 0 };
+      newColors[index] = {
+        ...newColors[index],
+        [field]: numValue >= 0 ? numValue : 0,
+      };
     } else {
       newColors[index] = { ...newColors[index], [field]: String(value) };
     }
@@ -409,21 +426,25 @@ function ProductFormModal({
   const removeColor = (index: number) => {
     setColors(colors.filter((_, i) => i !== index));
   };
-  
+
   const toggleSize = (size: string) => {
-    const existing = sizes.find(s => s.size === size);
+    const existing = sizes.find((s) => s.size === size);
     if (existing) {
-      setSizes(sizes.filter(s => s.size !== size));
+      setSizes(sizes.filter((s) => s.size !== size));
     } else {
       setSizes([...sizes, { size, quantity: 0 }]);
     }
   };
-  
+
   const updateSizeQuantity = (size: string, quantity: number | string) => {
     const numValue = quantity === "" ? 0 : Number(quantity);
-    setSizes(sizes.map(s => s.size === size ? { ...s, quantity: numValue >= 0 ? numValue : 0 } : s));
+    setSizes(
+      sizes.map((s) =>
+        s.size === size ? { ...s, quantity: numValue >= 0 ? numValue : 0 } : s
+      )
+    );
   };
-  
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const url = e.target.value;
     setFormData({ ...formData, imageUrl: url });
@@ -436,7 +457,7 @@ function ProductFormModal({
     if (!file) return;
 
     // Validate file type
-    if (!file.type.startsWith('image/')) {
+    if (!file.type.startsWith("image/")) {
       showToast("Зөвхөн зураг файл оруулна уу", "error");
       return;
     }
@@ -523,14 +544,16 @@ function ProductFormModal({
               />
             </div>
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium mb-2 text-black">
               Зураг *
             </label>
             <div className="space-y-3">
               <div>
-                <label className="block text-xs text-black mb-2">Файл upload хийх:</label>
+                <label className="block text-xs text-black mb-2">
+                  Файл upload хийх:
+                </label>
                 <input
                   type="file"
                   accept="image/*"
@@ -547,7 +570,9 @@ function ProductFormModal({
                 </div>
               </div>
               <div>
-                <label className="block text-xs text-black mb-2">URL оруулах:</label>
+                <label className="block text-xs text-black mb-2">
+                  URL оруулах:
+                </label>
                 <input
                   type="url"
                   value={imageFile ? "" : formData.imageUrl}
@@ -575,13 +600,14 @@ function ProductFormModal({
                 </div>
                 {imageFile && (
                   <p className="text-xs text-black mt-2">
-                    Файл: {imageFile.name} ({(imageFile.size / 1024).toFixed(1)} KB)
+                    Файл: {imageFile.name} ({(imageFile.size / 1024).toFixed(1)}{" "}
+                    KB)
                   </p>
                 )}
               </div>
             )}
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium mb-2 text-black">
               Тайлбар
@@ -608,7 +634,9 @@ function ProductFormModal({
                       type="text"
                       placeholder="Өнгө (жишээ: Black)"
                       value={color.color}
-                      onChange={(e) => updateColor(index, "color", e.target.value)}
+                      onChange={(e) =>
+                        updateColor(index, "color", e.target.value)
+                      }
                       className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm placeholder:text-black placeholder:opacity-60 text-black"
                     />
                     <input
@@ -639,7 +667,7 @@ function ProductFormModal({
                 </button>
               </div>
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium mb-2 text-black">
                 Хэмжээ болон нөөц
@@ -652,7 +680,7 @@ function ProductFormModal({
                       type="button"
                       onClick={() => toggleSize(size)}
                       className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
-                        sizes.some(s => s.size === size)
+                        sizes.some((s) => s.size === size)
                           ? "bg-black text-white"
                           : "bg-gray-200 text-black hover:bg-gray-300"
                       }`}
@@ -663,7 +691,9 @@ function ProductFormModal({
                 </div>
                 {sizes.map((size, index) => (
                   <div key={index} className="flex items-center gap-2">
-                    <span className="w-12 text-sm font-medium text-black">{size.size}:</span>
+                    <span className="w-12 text-sm font-medium text-black">
+                      {size.size}:
+                    </span>
                     <input
                       type="number"
                       min="0"
@@ -679,7 +709,7 @@ function ProductFormModal({
               </div>
             </div>
           </div>
-          
+
           <div className="flex gap-3 pt-4 border-t">
             <button
               type="submit"

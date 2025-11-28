@@ -10,8 +10,8 @@ export default function MaleCollectionPage() {
       <Header />
       <CollectionPage
         category="Male"
-        title="Men's Collection"
-        description="Discover our latest collection of men's fashion"
+        title="Эрэгтэйчүүдийн цуглуулга"
+        description="Эрэгтэйчүүдийн шинэ хувцаслалтын цуглуулга"
       />
     </>
   );
