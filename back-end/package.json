@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "npm install --include=dev && tsc",
     "dev": "ts-node src/server.ts",
     "start": "node dist/server.js",
     "migrate:about": "ts-node src/scripts/migrateAbout.ts",
