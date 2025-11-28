@@ -401,7 +401,7 @@ function ProductFormModal({
       const numValue = value === "" ? 0 : Number(value);
       newColors[index] = { ...newColors[index], [field]: numValue >= 0 ? numValue : 0 };
     } else {
-      newColors[index] = { ...newColors[index], [field]: value };
+      newColors[index] = { ...newColors[index], [field]: String(value) };
     }
     setColors(newColors);
   };
