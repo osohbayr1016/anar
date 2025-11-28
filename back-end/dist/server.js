@@ -24,14 +24,26 @@ const app = (0, express_1.default)();
     process.exit(1);
 });
 // CORS configuration
+const getAllowedOrigins = () => {
+    if (process.env.FRONTEND_URL) {
+        const origins = process.env.FRONTEND_URL.split(",").map((url) => url.trim());
+        console.log("✅ CORS allowed origins:", origins);
+        return origins;
+    }
+    if (process.env.NODE_ENV === "production") {
+        console.warn("⚠️  WARNING: FRONTEND_URL not set in production. Allowing all origins.");
+        console.warn("⚠️  Please set FRONTEND_URL environment variable for security.");
+        return true; // Allow all origins temporarily if FRONTEND_URL not set
+    }
+    return ["http://localhost:3000", "http://localhost:3001"];
+};
 const corsOptions = {
-    origin: process.env.FRONTEND_URL
-        ? process.env.FRONTEND_URL.split(",")
-        : process.env.NODE_ENV === "production"
-            ? []
-            : ["http://localhost:3000", "http://localhost:3001"],
+    origin: getAllowedOrigins(),
     credentials: true,
     optionsSuccessStatus: 200,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+    exposedHeaders: ["Content-Range", "X-Content-Range"],
 };
 // Middleware
 app.use((0, cors_1.default)(corsOptions));
