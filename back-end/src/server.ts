@@ -25,17 +25,21 @@ connectDB().catch((error) => {
 // CORS configuration
 const getAllowedOrigins = (): string[] | boolean => {
   if (process.env.FRONTEND_URL) {
-    const origins = process.env.FRONTEND_URL.split(",").map((url) => url.trim());
+    const origins = process.env.FRONTEND_URL.split(",").map((url) =>
+      url.trim()
+    );
     console.log("✅ CORS allowed origins:", origins);
     return origins;
   }
-  
+
   if (process.env.NODE_ENV === "production") {
-    console.warn("⚠️  WARNING: FRONTEND_URL not set in production. Allowing all origins.");
-    console.warn("⚠️  Please set FRONTEND_URL environment variable for security.");
-    return true; // Allow all origins temporarily if FRONTEND_URL not set
+    console.warn("⚠️  WARNING: FRONTEND_URL not set in production.");
+    console.warn(
+      "⚠️  Allowing all origins as fallback. Please set FRONTEND_URL for security."
+    );
+    return true; // Allow all origins in production if FRONTEND_URL not set
   }
-  
+
   return ["http://localhost:3000", "http://localhost:3001"];
 };
 
@@ -47,6 +51,12 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
   exposedHeaders: ["Content-Range", "X-Content-Range"],
 };
+
+// Log CORS configuration on startup
+console.log("🔧 CORS Configuration:");
+console.log("   Environment:", process.env.NODE_ENV || "development");
+console.log("   FRONTEND_URL:", process.env.FRONTEND_URL || "NOT SET");
+console.log("   Allowed Origins:", getAllowedOrigins());
 
 // Middleware
 app.use(cors(corsOptions));
