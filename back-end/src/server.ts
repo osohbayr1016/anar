@@ -24,27 +24,85 @@ connectDB().catch((error) => {
 
 // CORS configuration
 const getAllowedOrigins = (): string[] | boolean => {
+  // If FRONTEND_URL is explicitly set, use it
   if (process.env.FRONTEND_URL) {
     const origins = process.env.FRONTEND_URL.split(",").map((url) =>
       url.trim()
     );
-    console.log("✅ CORS allowed origins:", origins);
+    console.log("✅ CORS allowed origins from FRONTEND_URL:", origins);
     return origins;
   }
 
-  if (process.env.NODE_ENV === "production") {
+  // Default production origins (common deployment platforms)
+  const defaultProductionOrigins = [
+    "https://anar-gamma.vercel.app",
+    "https://anar-shop.vercel.app",
+    "https://anar-shop-git-main.vercel.app",
+  ];
+
+  // Check if we're in production (Render, Vercel, etc.)
+  const isProduction =
+    process.env.NODE_ENV === "production" ||
+    process.env.RENDER === "true" ||
+    process.env.VERCEL === "1";
+
+  // In production, allow default origins or all if none specified
+  if (isProduction) {
     console.warn("⚠️  WARNING: FRONTEND_URL not set in production.");
     console.warn(
-      "⚠️  Allowing all origins as fallback. Please set FRONTEND_URL for security."
+      "⚠️  Using default production origins. Set FRONTEND_URL for security."
     );
-    return true; // Allow all origins in production if FRONTEND_URL not set
+    console.log(
+      "✅ CORS allowed origins (default production):",
+      defaultProductionOrigins
+    );
+    return defaultProductionOrigins;
   }
 
-  return ["http://localhost:3000", "http://localhost:3001"];
+  // Development origins
+  const devOrigins = ["http://localhost:3000", "http://localhost:3001"];
+  console.log("✅ CORS allowed origins (development):", devOrigins);
+  return devOrigins;
 };
 
 const corsOptions = {
-  origin: getAllowedOrigins(),
+  origin: (
+    origin: string | undefined,
+    callback: (err: Error | null, allow?: boolean) => void
+  ) => {
+    const allowedOrigins = getAllowedOrigins();
+
+    // If allowedOrigins is boolean (true = allow all)
+    if (typeof allowedOrigins === "boolean") {
+      callback(null, allowedOrigins);
+      return;
+    }
+
+    // If no origin (same-origin request, mobile apps, etc.), allow it
+    if (!origin) {
+      callback(null, true);
+      return;
+    }
+
+    // Check if origin is in allowed list
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      // In production without FRONTEND_URL, allow all as fallback
+      const isProduction =
+        process.env.NODE_ENV === "production" ||
+        process.env.RENDER === "true" ||
+        process.env.VERCEL === "1";
+
+      if (isProduction && !process.env.FRONTEND_URL) {
+        console.warn(`⚠️  Allowing origin ${origin} (FRONTEND_URL not set)`);
+        callback(null, true);
+      } else {
+        console.error(`❌ CORS blocked origin: ${origin}`);
+        callback(new Error(`Not allowed by CORS: ${origin}`));
+      }
+    }
+  },
   credentials: true,
   optionsSuccessStatus: 200,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
@@ -56,7 +114,6 @@ const corsOptions = {
 console.log("🔧 CORS Configuration:");
 console.log("   Environment:", process.env.NODE_ENV || "development");
 console.log("   FRONTEND_URL:", process.env.FRONTEND_URL || "NOT SET");
-console.log("   Allowed Origins:", getAllowedOrigins());
 
 // Middleware
 app.use(cors(corsOptions));
