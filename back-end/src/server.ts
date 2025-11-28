@@ -23,30 +23,35 @@ connectDB().catch((error) => {
 });
 
 // CORS configuration
-const getAllowedOrigins = (): string[] | boolean => {
-  // If FRONTEND_URL is explicitly set, use it
+// Always include these production frontend URLs
+const defaultProductionOrigins = [
+  "https://anar-gamma.vercel.app",
+  "https://anar-shop.vercel.app",
+  "https://anar-shop-git-main.vercel.app",
+];
+
+const getAllowedOrigins = (): string[] => {
+  // If FRONTEND_URL is explicitly set, merge it with defaults
   if (process.env.FRONTEND_URL) {
-    const origins = process.env.FRONTEND_URL.split(",").map((url) =>
+    const customOrigins = process.env.FRONTEND_URL.split(",").map((url) =>
       url.trim()
     );
-    console.log("✅ CORS allowed origins from FRONTEND_URL:", origins);
-    return origins;
+    // Merge with defaults and remove duplicates
+    const allOrigins = [
+      ...new Set([...defaultProductionOrigins, ...customOrigins]),
+    ];
+    console.log("✅ CORS allowed origins from FRONTEND_URL:", allOrigins);
+    return allOrigins;
   }
-
-  // Default production origins (common deployment platforms)
-  const defaultProductionOrigins = [
-    "https://anar-gamma.vercel.app",
-    "https://anar-shop.vercel.app",
-    "https://anar-shop-git-main.vercel.app",
-  ];
 
   // Check if we're in production (Render, Vercel, etc.)
   const isProduction =
     process.env.NODE_ENV === "production" ||
     process.env.RENDER === "true" ||
-    process.env.VERCEL === "1";
+    process.env.VERCEL === "1" ||
+    process.env.RENDER_SERVICE_NAME !== undefined;
 
-  // In production, allow default origins or all if none specified
+  // In production, use default origins
   if (isProduction) {
     console.warn("⚠️  WARNING: FRONTEND_URL not set in production.");
     console.warn(
@@ -72,14 +77,14 @@ const corsOptions = {
   ) => {
     const allowedOrigins = getAllowedOrigins();
 
-    // If allowedOrigins is boolean (true = allow all)
-    if (typeof allowedOrigins === "boolean") {
-      callback(null, allowedOrigins);
+    // If no origin (same-origin request, mobile apps, Postman, etc.), allow it
+    if (!origin) {
+      callback(null, true);
       return;
     }
 
-    // If no origin (same-origin request, mobile apps, etc.), allow it
-    if (!origin) {
+    // Always allow Vercel domains (common frontend deployment)
+    if (origin.includes("vercel.app") || origin.includes("vercel.com")) {
       callback(null, true);
       return;
     }
@@ -87,20 +92,26 @@ const corsOptions = {
     // Check if origin is in allowed list
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
-    } else {
-      // In production without FRONTEND_URL, allow all as fallback
-      const isProduction =
-        process.env.NODE_ENV === "production" ||
-        process.env.RENDER === "true" ||
-        process.env.VERCEL === "1";
+      return;
+    }
 
-      if (isProduction && !process.env.FRONTEND_URL) {
-        console.warn(`⚠️  Allowing origin ${origin} (FRONTEND_URL not set)`);
-        callback(null, true);
-      } else {
-        console.error(`❌ CORS blocked origin: ${origin}`);
-        callback(new Error(`Not allowed by CORS: ${origin}`));
-      }
+    // Check if we're in production
+    const isProduction =
+      process.env.NODE_ENV === "production" ||
+      process.env.RENDER === "true" ||
+      process.env.VERCEL === "1" ||
+      process.env.RENDER_SERVICE_NAME !== undefined;
+
+    // In production without FRONTEND_URL, allow all as fallback for safety
+    if (isProduction && !process.env.FRONTEND_URL) {
+      console.warn(
+        `⚠️  Allowing origin ${origin} (FRONTEND_URL not set, production mode)`
+      );
+      callback(null, true);
+    } else {
+      console.error(`❌ CORS blocked origin: ${origin}`);
+      console.error(`   Allowed origins:`, allowedOrigins);
+      callback(new Error(`Not allowed by CORS: ${origin}`));
     }
   },
   credentials: true,
