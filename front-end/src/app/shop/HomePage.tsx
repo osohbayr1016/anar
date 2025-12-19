@@ -11,7 +11,7 @@ type Product = {
   name: string;
   price: number;
   imageUrl: string;
-  category: "Male" | "Female" | "Children";
+  category: "Male" | "Female" | "Children" | "Accessories";
   description?: string;
 };
 
@@ -23,15 +23,20 @@ export default function HomePage() {
   useEffect(() => {
     fetch(`${API_BASE}/api/products`)
       .then((r) => r.json())
-      .then((data: Product[]) => {
-        // Latest products (most recent)
-        const latest = [...data].slice(0, 8);
-        setLatestProducts(latest);
+      .then(
+        (response: { success?: boolean; products?: Product[] } | Product[]) => {
+          const products = Array.isArray(response)
+            ? response
+            : response.products || [];
+          // Latest products (most recent)
+          const latest = [...products].slice(0, 8);
+          setLatestProducts(latest);
 
-        // Best sellers (can be filtered by popularity or just use some products)
-        const sellers = [...data].slice(0, 4);
-        setBestSellers(sellers);
-      })
+          // Best sellers (can be filtered by popularity or just use some products)
+          const sellers = [...products].slice(0, 4);
+          setBestSellers(sellers);
+        }
+      )
       .finally(() => setLoading(false));
   }, []);
 
@@ -42,16 +47,16 @@ export default function HomePage() {
         {/* Hero Section - Shop the Faves */}
         <section className="text-center py-16 sm:py-24 px-4">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 text-black">
-            Дуртай бүтээгдэхүүн
+            Shop the Faves
           </h1>
           <p className="text-lg sm:text-xl text-black mb-8">
-            Манай дуртай. Таны дуртай.
+            Our faves. Your Faves.
           </p>
           <Link
             href="/products"
             className="inline-block bg-black text-white px-8 py-3 text-sm font-medium hover:bg-gray-800 transition-colors"
           >
-            Бүтээгдэхүүн үзэх
+            Shop Collection
           </Link>
         </section>
 
@@ -63,10 +68,10 @@ export default function HomePage() {
                 <div className="bg-gray-100 aspect-[4/3] flex items-center justify-center hover:scale-[1.02] transition-transform rounded-xl">
                   <div className="text-center">
                     <h2 className="text-2xl sm:text-3xl font-bold mb-2 text-black">
-                      ЭРЭГТЭЙ ЦУГЛУУЛГА
+                      MALE COLLECTION
                     </h2>
                     <p className="text-sm sm:text-base text-black">
-                      Эрэгтэйчүүдийн хувцаслалт
+                      Discover men&apos;s fashion
                     </p>
                   </div>
                 </div>
@@ -75,10 +80,10 @@ export default function HomePage() {
                 <div className="bg-gray-100 aspect-[4/3] flex items-center justify-center hover:scale-[1.02] transition-transform rounded-xl">
                   <div className="text-center">
                     <h2 className="text-2xl sm:text-3xl font-bold mb-2 text-black">
-                      ЭМЭГТЭЙ ЦУГЛУУЛГА
+                      FEMALE COLLECTION
                     </h2>
                     <p className="text-sm sm:text-base text-black">
-                      Эмэгтэйчүүдийн хувцаслалт
+                      Explore women&apos;s fashion
                     </p>
                   </div>
                 </div>
@@ -88,10 +93,10 @@ export default function HomePage() {
               <div className="bg-gray-100 aspect-[16/6] flex items-center justify-center hover:scale-[1.02] transition-transform rounded-xl">
                 <div className="text-center">
                   <h2 className="text-3xl sm:text-4xl font-bold mb-2 text-black">
-                    ХҮҮХДИЙН ЦУГЛУУЛГА
+                    CHILDREN COLLECTION
                   </h2>
                   <p className="text-base sm:text-lg text-black">
-                    Хүүхдийн тав тухтай хувцас
+                    Fun and comfortable kids clothing
                   </p>
                 </div>
               </div>
@@ -104,14 +109,14 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-8">
               <h2 className="text-3xl sm:text-4xl font-bold mb-2 text-black">
-                Хамгийн их борлуулалт
+                Best Sellers
               </h2>
-              <p className="text-black mb-6">МАШ ХУДАЛДААНД ГАРЧ БАЙНА</p>
+              <p className="text-black mb-6">TOO HOT TO KEEP IN STOCK</p>
               <Link
                 href="/products"
                 className="inline-block bg-black text-white px-6 py-2 text-sm font-medium hover:bg-gray-800 transition-colors"
               >
-                ОДОО ХУДАЛДАЖ АВАХ
+                SHOP NOW
               </Link>
             </div>
             {loading ? (
@@ -139,9 +144,9 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-8">
               <h2 className="text-3xl sm:text-4xl font-bold mb-2 text-black">
-                Шинэ бүтээгдэхүүн
+                Latest Drops
               </h2>
-              <p className="text-black">Хувцас болон бусад</p>
+              <p className="text-black">Skate Decks and more</p>
             </div>
             {loading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -165,7 +170,7 @@ export default function HomePage() {
                 href="/products"
                 className="inline-block text-black underline text-sm font-medium hover:text-gray-600"
               >
-                Бүгдийг харах
+                View all
               </Link>
             </div>
           </div>
@@ -175,27 +180,27 @@ export default function HomePage() {
         <footer className="bg-black text-white py-12 px-4">
           <div className="max-w-7xl mx-auto text-center">
             <p className="text-lg sm:text-xl mb-4">
-              Монголд бүтээгдсэн. Дэлхий даяар өмсөгддөг.
+              Designed in Mongolia. Worn everywhere.
             </p>
             <p className="text-sm text-gray-400 mb-6">
-              Anar Shop бол загварын сонирхолтой хүмүүсийн бүтээл юм.
+              Anar Shop is the brainchild of fashion enthusiasts.
             </p>
             <div className="flex justify-center space-x-6 mb-6">
               <Link href="/products" className="text-sm hover:text-gray-400">
-                Дэлгүүр
+                Shop
               </Link>
               <Link href="/auth/login" className="text-sm hover:text-gray-400">
-                Данс
+                Account
               </Link>
               {process.env.NODE_ENV === "development" && (
                 <Link href="/admin" className="text-sm hover:text-gray-400">
-                  Админ
+                  Admin
                 </Link>
               )}
             </div>
             <p className="text-xs text-gray-500">
-              Зохиогчийн эрх © {new Date().getFullYear()}, Anar Shop. Бүх эрх
-              хуулиар хамгаалагдсан.
+              Copyright © {new Date().getFullYear()}, Anar Shop. All Rights
+              Reserved.
             </p>
           </div>
         </footer>

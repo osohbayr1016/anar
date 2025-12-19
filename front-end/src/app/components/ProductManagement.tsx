@@ -18,7 +18,7 @@ type Product = {
   name: string;
   price: number;
   imageUrl: string;
-  category: "Male" | "Female" | "Children";
+  category: "Male" | "Female" | "Children" | "Accessories";
   description?: string;
   colors?: ColorStock[];
   sizes?: SizeStock[];
@@ -26,7 +26,7 @@ type Product = {
 };
 
 type ProductManagementProps = {
-  category: "Male" | "Female" | "Children";
+  category: "Male" | "Female" | "Children" | "Accessories";
 };
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:4000";
@@ -52,7 +52,8 @@ export default function ProductManagement({
     try {
       const res = await fetch(`${API_BASE}/api/products`);
       const data = await res.json();
-      setProducts(data.filter((p: Product) => p.category === category));
+      const productsList = data.products || data;
+      setProducts(productsList.filter((p: Product) => p.category === category));
     } catch (error) {
       console.error("Error fetching products:", error);
     } finally {
@@ -88,27 +89,20 @@ export default function ProductManagement({
   };
 
   if (loading) {
-    return (
-      <div className="text-center py-12 text-black">Ачааллаж байна...</div>
-    );
+    return <div className="text-center py-12 text-black">Loading...</div>;
   }
 
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
         <h2 className="text-xl sm:text-2xl font-bold text-black">
-          {category === "Male"
-            ? "Эрэгтэй"
-            : category === "Female"
-            ? "Эмэгтэй"
-            : "Хүүхэд"}{" "}
-          бүтээгдэхүүн ({products.length})
+          {category} Products ({products.length})
         </h2>
         <button
           onClick={startCreate}
           className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors w-full sm:w-auto"
         >
-          + Бүтээгдэхүүн нэмэх
+          + Add Product
         </button>
       </div>
 
@@ -118,19 +112,19 @@ export default function ProductManagement({
           <thead className="bg-white border-b border-gray-200">
             <tr>
               <th className="px-6 py-4 text-left text-sm font-semibold text-black">
-                Бүтээгдэхүүн
+                Product
               </th>
               <th className="px-6 py-4 text-left text-sm font-semibold text-black">
-                Үнэ
+                Price
               </th>
               <th className="px-6 py-4 text-left text-sm font-semibold text-black">
-                Нөөц
+                Stock
               </th>
               <th className="px-6 py-4 text-left text-sm font-semibold text-black">
-                Өнгө/Хэмжээ
+                Colors/Sizes
               </th>
               <th className="px-6 py-4 text-right text-sm font-semibold text-black">
-                Үйлдлүүд
+                Actions
               </th>
             </tr>
           </thead>
@@ -161,7 +155,7 @@ export default function ProductManagement({
                 </td>
                 <td className="px-6 py-4">
                   <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">
-                    {product.totalStock || 0} ширхэг
+                    {product.totalStock || 0} units
                   </span>
                 </td>
                 <td className="px-6 py-4">
@@ -197,7 +191,7 @@ export default function ProductManagement({
                     onClick={() => startEdit(product)}
                     className="text-black hover:text-gray-600 font-medium transition-colors"
                   >
-                    Засах
+                    Edit
                   </button>
                   <button
                     onClick={() =>
@@ -205,7 +199,7 @@ export default function ProductManagement({
                     }
                     className="text-red-600 hover:text-red-800 font-medium transition-colors"
                   >
-                    Устгах
+                    Delete
                   </button>
                 </td>
               </tr>
@@ -245,7 +239,7 @@ export default function ProductManagement({
             </div>
             <div className="flex items-center justify-between mb-3">
               <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs">
-                {product.totalStock || 0} ширхэг
+                {product.totalStock || 0} units
               </span>
               <div className="flex flex-wrap gap-1">
                 {product.colors?.slice(0, 2).map((c, i) => (
@@ -320,7 +314,7 @@ function ProductFormModal({
   onSuccess,
 }: {
   product: Product | null;
-  category: "Male" | "Female" | "Children";
+  category: "Male" | "Female" | "Children" | "Accessories";
   onClose: () => void;
   onSuccess: () => void;
 }) {
@@ -356,8 +350,37 @@ function ProductFormModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    let imageUrl = formData.imageUrl;
+
+    // Upload image to Cloudinary if file is selected
+    if (imageFile) {
+      try {
+        showToast("Зураг upload хийж байна...", "info");
+        const formDataUpload = new FormData();
+        formDataUpload.append("image", imageFile);
+
+        const token = localStorage.getItem("token");
+        const uploadResponse = await fetch(`${API_BASE}/api/upload`, {
+          method: "POST",
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+          body: formDataUpload,
+        });
+
+        if (!uploadResponse.ok) {
+          throw new Error("Image upload failed");
+        }
+
+        const uploadData = await uploadResponse.json();
+        imageUrl = uploadData.imageUrl;
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        showToast("Зураг upload хийхэд алдаа гарлаа", "error");
+        return;
+      }
+    }
+
     // Validate image
-    if (!formData.imageUrl) {
+    if (!imageUrl) {
       showToast("Зураг оруулах шаардлагатай", "error");
       return;
     }
@@ -371,6 +394,7 @@ function ProductFormModal({
 
     const productData = {
       ...formData,
+      imageUrl,
       category,
       colors: colors.filter((c) => c.color && c.quantity > 0),
       sizes: sizes.filter((s) => s.quantity > 0),
@@ -379,16 +403,24 @@ function ProductFormModal({
     };
 
     try {
+      const token = localStorage.getItem("token");
       const url = product
         ? `${API_BASE}/api/products/${product.id}`
         : `${API_BASE}/api/products`;
       const method = product ? "PUT" : "POST";
 
-      await fetch(url, {
+      const response = await fetch(url, {
         method,
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify(productData),
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to save product");
+      }
 
       showToast(
         product ? "Бүтээгдэхүүн шинэчлэгдлээ" : "Бүтээгдэхүүн нэмэгдлээ",
@@ -418,7 +450,7 @@ function ProductFormModal({
         [field]: numValue >= 0 ? numValue : 0,
       };
     } else {
-      newColors[index] = { ...newColors[index], [field]: String(value) };
+      newColors[index] = { ...newColors[index], [field]: value };
     }
     setColors(newColors);
   };

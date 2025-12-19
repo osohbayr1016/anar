@@ -14,14 +14,14 @@ type Product = {
   name: string;
   price: number;
   imageUrl: string;
-  category: "Male" | "Female" | "Children";
+  category: "Male" | "Female" | "Children" | "Accessories";
   description?: string;
   colors?: ColorStock[];
   totalStock?: number;
 };
 
 type CollectionPageProps = {
-  category: "Male" | "Female" | "Children";
+  category: "Male" | "Female" | "Children" | "Accessories";
   title: string;
   description: string;
 };
@@ -44,11 +44,18 @@ export default function CollectionPage({
   useEffect(() => {
     fetch(`${API_BASE}/api/products`)
       .then((r) => r.json())
-      .then((data) => {
-        const filtered = data.filter((p: Product) => p.category === category);
-        setProducts(filtered);
-        setFilteredProducts(filtered);
-      })
+      .then(
+        (response: { success?: boolean; products?: Product[] } | Product[]) => {
+          const products = Array.isArray(response)
+            ? response
+            : response.products || [];
+          const filtered = products.filter(
+            (p: Product) => p.category === category
+          );
+          setProducts(filtered);
+          setFilteredProducts(filtered);
+        }
+      )
       .finally(() => setLoading(false));
   }, [category]);
 
@@ -106,13 +113,7 @@ export default function CollectionPage({
               Бүтээгдэхүүн
             </Link>
             <span className="text-gray-400">/</span>
-            <span className="text-black font-medium">
-              {category === "Male"
-                ? "Эрэгтэй"
-                : category === "Female"
-                ? "Эмэгтэй"
-                : "Хүүхэд"}
-            </span>
+            <span className="text-black font-medium">{category}</span>
           </nav>
           <h1 className="text-5xl font-bold mb-4 text-black">{title}</h1>
           <p className="text-black text-lg">{description}</p>

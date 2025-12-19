@@ -19,7 +19,7 @@ type Product = {
   name: string;
   price: number;
   imageUrl: string;
-  category: "Male" | "Female" | "Children";
+  category: "Male" | "Female" | "Children" | "Accessories";
   description?: string;
   colors?: ColorStock[];
   totalStock?: number;
@@ -224,11 +224,7 @@ export default function ProductDetailPage() {
               href={`/collections/${product.category.toLowerCase()}`}
               className="hover:text-gray-600"
             >
-              {product.category === "Male"
-                ? "Эрэгтэй"
-                : product.category === "Female"
-                ? "Эмэгтэй"
-                : "Хүүхэд"}
+              {product.category}
             </Link>
             <span className="text-gray-400">/</span>
             <span className="text-black font-medium">{product.name}</span>
@@ -260,14 +256,7 @@ export default function ProductDetailPage() {
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 text-black">
                 {product.name}
               </h1>
-              <p className="text-black mb-4">
-                {product.category === "Male"
-                  ? "Эрэгтэй"
-                  : product.category === "Female"
-                  ? "Эмэгтэй"
-                  : "Хүүхэд"}{" "}
-                цуглуулга
-              </p>
+              <p className="text-black mb-4">{product.category} Collection</p>
               <div className="flex items-center space-x-2 sm:space-x-4 mb-6">
                 <div className="flex items-center">
                   {[1, 2, 3, 4, 5].map((star) => (

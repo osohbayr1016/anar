@@ -10,8 +10,8 @@ export default function ChildrenCollectionPage() {
       <Header />
       <CollectionPage
         category="Children"
-        title="Хүүхдийн цуглуулга"
-        description="Хүүхдийн тав тухтай хувцас"
+        title="Children's Collection"
+        description="Fun and comfortable clothing for kids"
       />
     </>
   );

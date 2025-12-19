@@ -10,8 +10,8 @@ export default function FemaleCollectionPage() {
       <Header />
       <CollectionPage
         category="Female"
-        title="Эмэгтэйчүүдийн цуглуулга"
-        description="Эмэгтэйчүүдийн гоё сайхан хувцаслалт"
+        title="Women's Collection"
+        description="Explore elegant and stylish women's fashion"
       />
     </>
   );

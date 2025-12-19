@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "npm install --include=dev && tsc",
+    "build": "tsc",
     "dev": "ts-node src/server.ts",
+    "prestart": "npm run build",
     "start": "node dist/server.js",
-    "migrate:about": "ts-node src/scripts/migrateAbout.ts",
+    "seed": "ts-node src/scripts/seedDatabase.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -14,20 +15,23 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/multer": "^2.0.0",
     "bcryptjs": "^3.0.2",
+    "cloudinary": "^2.8.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.4",
-    "typescript": "^5.9.3",
-    "@types/node": "^22.10.2",
+    "multer": "^2.0.2",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
-    "@types/jsonwebtoken": "^9.0.10"
-  },
-  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^22.10.2",
     "ts-node": "^10.9.2"
   }
 }

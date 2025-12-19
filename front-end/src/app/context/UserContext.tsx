@@ -6,7 +6,7 @@ type Product = {
   name: string;
   price: number;
   imageUrl: string;
-  category: "Male" | "Female" | "Children";
+  category: "Male" | "Female" | "Children" | "Accessories";
   description?: string;
 };
 
@@ -175,5 +175,3 @@ export function useUser() {
   }
   return context;
 }
-
-

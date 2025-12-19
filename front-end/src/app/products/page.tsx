@@ -7,19 +7,24 @@ export const dynamic = "force-dynamic";
 export default function ProductsPage() {
   const collections = [
     {
-      name: "Эрэгтэй",
+      name: "Male",
       href: "/collections/male",
-      description: "Эрэгтэйчүүдийн хувцаслалтын цуглуулга",
+      description: "Discover our men&apos;s fashion collection",
     },
     {
-      name: "Эмэгтэй",
+      name: "Female",
       href: "/collections/female",
-      description: "Эмэгтэйчүүдийн гоё сайхан хувцаслалт",
+      description: "Explore elegant women&apos;s fashion",
     },
     {
-      name: "Хүүхэд",
+      name: "Children",
       href: "/collections/children",
-      description: "Хүүхдийн тав тухтай хувцас",
+      description: "Fun and comfortable kids clothing",
+    },
+    {
+      name: "Accessories",
+      href: "/collections/accessories",
+      description: "Complete your look with stylish accessories",
     },
   ];
 
@@ -31,17 +36,17 @@ export default function ProductsPage() {
         <div className="bg-white border-b border-gray-200 py-12 sm:py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-black">
-              Манай цуглуулгууд
+              Our Collections
             </h1>
             <p className="text-black text-base sm:text-lg">
-              Бүтээгдэхүүн үзэхийн тулд ангилал сонгоно уу
+              Choose a category to explore our products
             </p>
           </div>
         </div>
 
         {/* Collections Grid */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {collections.map((collection) => (
               <Link
                 key={collection.name}
@@ -58,7 +63,7 @@ export default function ProductsPage() {
                       {collection.description}
                     </p>
                     <div className="flex items-center text-black font-medium mt-auto">
-                      Одоо худалдаж авах
+                      Shop Now
                       <svg
                         className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform"
                         fill="none"

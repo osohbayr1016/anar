@@ -104,7 +104,7 @@ export default function CheckoutPage() {
               Сагс
             </Link>
             <span>/</span>
-            <span className="text-black font-medium">Захиалга</span>
+            <span className="text-black font-medium">Checkout</span>
           </nav>
 
           <h1 className="text-2xl sm:text-3xl font-bold mb-8">
@@ -238,7 +238,7 @@ export default function CheckoutPage() {
                 </div>
                 <div className="border-t pt-4 space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Дэд дүн</span>
+                    <span className="text-gray-600">Subtotal</span>
                     <span className="font-semibold">
                       ${cartTotal.toFixed(2)}
                     </span>
@@ -262,3 +262,5 @@ export default function CheckoutPage() {
     </>
   );
 }
+
+

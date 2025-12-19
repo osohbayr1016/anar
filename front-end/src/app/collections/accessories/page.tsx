@@ -4,14 +4,14 @@ import CollectionPage from "@/app/components/CollectionPage";
 
 export const dynamic = "force-dynamic";
 
-export default function MaleCollectionPage() {
+export default function AccessoriesCollectionPage() {
   return (
     <>
       <Header />
       <CollectionPage
-        category="Male"
-        title="Men's Collection"
-        description="Discover our latest collection of men's fashion"
+        category="Accessories"
+        title="Accessories Collection"
+        description="Complete your look with our stylish accessories"
       />
     </>
   );

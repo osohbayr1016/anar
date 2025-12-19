@@ -12,7 +12,7 @@ type Product = {
   name: string;
   price: number;
   imageUrl: string;
-  category: "Male" | "Female" | "Children";
+  category: "Male" | "Female" | "Children" | "Accessories";
   description?: string;
   originalPrice?: number;
 };
@@ -53,10 +53,10 @@ export default function SalePage() {
 
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-4 text-black">Хямдрал</h1>
-            <p className="text-lg text-black">
-              Онцгой үнээр бүтээгдэхүүнүүд
-            </p>
+            <h1 className="text-4xl sm:text-5xl font-bold mb-4 text-black">
+              Хямдрал
+            </h1>
+            <p className="text-lg text-black">Онцгой үнээр бүтээгдэхүүнүүд</p>
           </div>
 
           {/* Products Grid */}
@@ -117,5 +117,3 @@ export default function SalePage() {
     </>
   );
 }
-
-

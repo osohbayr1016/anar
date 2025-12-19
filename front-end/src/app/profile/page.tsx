@@ -41,15 +41,15 @@ export default function ProfilePage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-white py-8 sm:py-12">
+      <main className="min-h-screen bg-gray-50 py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* User Info Section */}
-          <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-4 sm:p-6 mb-6 sm:mb-8">
+          <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6 sm:mb-8">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="flex items-center space-x-4">
                 <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center">
                   <svg
-                    className="w-12 h-12 text-black"
+                    className="w-12 h-12 text-gray-400"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -58,16 +58,16 @@ export default function ProfilePage() {
                 </div>
                 <div>
                   <h1 className="text-3xl font-bold text-black">{user.name}</h1>
-                  <p className="text-black">{user.email}</p>
+                  <p className="text-gray-700">{user.email}</p>
                   <span className="inline-block mt-1 px-3 py-1 bg-gray-100 text-black text-sm rounded-full border border-gray-200">
-                    {user.role}
+                    {user.role === "admin" ? "Админ" : "Хэрэглэгч"}
                   </span>
                 </div>
               </div>
               <div className="flex gap-2">
                 <Link
                   href="/orders"
-                  className="bg-gray-200 text-black px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-gray-300 text-sm sm:text-base border border-gray-300"
+                  className="bg-gray-200 text-gray-800 px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-gray-300 text-sm sm:text-base"
                 >
                   Захиалгууд
                 </Link>
@@ -87,7 +87,7 @@ export default function ProfilePage() {
               Худалдан авах сагс ({cart.length})
             </h2>
             {cart.length > 0 ? (
-              <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-4 sm:p-6">
+              <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
                 <div className="space-y-4">
                   {cart.map((item) => (
                     <div
@@ -100,8 +100,8 @@ export default function ProfilePage() {
                           <h3 className="font-semibold truncate text-black">
                             {item.name}
                           </h3>
-                          <p className="text-black">${item.price}</p>
-                          <span className="text-xs text-black">
+                          <p className="text-gray-700">${item.price}</p>
+                          <span className="text-xs text-gray-600">
                             {item.category === "Male"
                               ? "Эрэгтэй"
                               : item.category === "Female"
@@ -116,7 +116,7 @@ export default function ProfilePage() {
                             onClick={() =>
                               updateCartQuantity(item.id, item.quantity - 1)
                             }
-                            className="w-8 h-8 bg-gray-200 rounded hover:bg-gray-300 flex items-center justify-center text-black font-semibold"
+                            className="w-8 h-8 bg-gray-200 text-black rounded hover:bg-gray-300 flex items-center justify-center font-semibold"
                           >
                             -
                           </button>
@@ -127,7 +127,7 @@ export default function ProfilePage() {
                             onClick={() =>
                               updateCartQuantity(item.id, item.quantity + 1)
                             }
-                            className="w-8 h-8 bg-gray-200 rounded hover:bg-gray-300 flex items-center justify-center text-black font-semibold"
+                            className="w-8 h-8 bg-gray-200 text-black rounded hover:bg-gray-300 flex items-center justify-center font-semibold"
                           >
                             +
                           </button>
@@ -174,10 +174,10 @@ export default function ProfilePage() {
                 </Link>
               </div>
             ) : (
-              <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-12 text-center">
+              <div className="bg-white rounded-lg shadow-md p-12 text-center">
                 <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg
-                    className="w-12 h-12 text-black"
+                    className="w-12 h-12 text-gray-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -193,7 +193,9 @@ export default function ProfilePage() {
                 <h3 className="text-xl font-semibold mb-2 text-black">
                   Таны сагс хоосон байна
                 </h3>
-                <p className="text-black mb-6">Бүтээгдэхүүн сонгож эхлээрэй!</p>
+                <p className="text-gray-700 mb-6">
+                  Бүтээгдэхүүн сонгож эхлээрэй!
+                </p>
                 <Link
                   href="/products"
                   className="inline-block bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors"
@@ -214,11 +216,11 @@ export default function ProfilePage() {
                 {wishlist.map((product) => (
                   <div
                     key={product.id}
-                    className="bg-white border border-gray-200 rounded-lg shadow-sm p-4"
+                    className="bg-white rounded-lg shadow-md p-4"
                   >
                     <div className="w-full aspect-square bg-gray-100 rounded mb-3"></div>
-                    <h3 className="font-semibold text-black">{product.name}</h3>
-                    <p className="text-black mb-3">${product.price}</p>
+                    <h3 className="font-semibold">{product.name}</h3>
+                    <p className="text-gray-600 mb-3">${product.price}</p>
                     <div className="flex gap-2">
                       <button
                         onClick={() => {
@@ -255,10 +257,10 @@ export default function ProfilePage() {
                 ))}
               </div>
             ) : (
-              <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-12 text-center">
+              <div className="bg-white rounded-lg shadow-md p-12 text-center">
                 <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg
-                    className="w-12 h-12 text-black"
+                    className="w-12 h-12 text-gray-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -274,7 +276,7 @@ export default function ProfilePage() {
                 <h3 className="text-xl font-semibold mb-2 text-black">
                   Хүслийн жагсаалт хоосон байна
                 </h3>
-                <p className="text-black mb-6">
+                <p className="text-gray-700 mb-6">
                   Таалагдсан бүтээгдэхүүнүүдээ энд хадгална уу
                 </p>
                 <Link
@@ -297,11 +299,11 @@ export default function ProfilePage() {
                 {favorites.map((product) => (
                   <div
                     key={product.id}
-                    className="bg-white border border-gray-200 rounded-lg shadow-sm p-4"
+                    className="bg-white rounded-lg shadow-md p-4"
                   >
                     <div className="w-full aspect-square bg-gray-100 rounded mb-3"></div>
-                    <h3 className="font-semibold text-black">{product.name}</h3>
-                    <p className="text-black mb-3">${product.price}</p>
+                    <h3 className="font-semibold">{product.name}</h3>
+                    <p className="text-gray-600 mb-3">${product.price}</p>
                     <div className="flex gap-2">
                       <button
                         onClick={() => {
@@ -338,10 +340,10 @@ export default function ProfilePage() {
                 ))}
               </div>
             ) : (
-              <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-12 text-center">
+              <div className="bg-white rounded-lg shadow-md p-12 text-center">
                 <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg
-                    className="w-12 h-12 text-black"
+                    className="w-12 h-12 text-gray-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -357,7 +359,7 @@ export default function ProfilePage() {
                 <h3 className="text-xl font-semibold mb-2 text-black">
                   Дуртай бүтээгдэхүүн байхгүй
                 </h3>
-                <p className="text-black mb-6">
+                <p className="text-gray-700 mb-6">
                   Онцгой бүтээгдэхүүнүүдээ тэмдэглээрэй
                 </p>
                 <Link
@@ -380,21 +382,21 @@ export default function ProfilePage() {
                 {recentlyViewed.map((product) => (
                   <div
                     key={product.id}
-                    className="bg-white border border-gray-200 rounded-lg shadow-sm p-3"
+                    className="bg-white rounded-lg shadow-md p-3"
                   >
                     <div className="w-full aspect-square bg-gray-100 rounded mb-2"></div>
                     <h3 className="font-semibold text-sm truncate text-black">
                       {product.name}
                     </h3>
-                    <p className="text-black text-sm">${product.price}</p>
+                    <p className="text-gray-700 text-sm">${product.price}</p>
                   </div>
                 ))}
               </div>
             ) : (
-              <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-12 text-center">
+              <div className="bg-white rounded-lg shadow-md p-12 text-center">
                 <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg
-                    className="w-12 h-12 text-black"
+                    className="w-12 h-12 text-gray-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -416,7 +418,7 @@ export default function ProfilePage() {
                 <h3 className="text-xl font-semibold mb-2 text-black">
                   Үзсэн түүх хоосон байна
                 </h3>
-                <p className="text-black mb-6">
+                <p className="text-gray-700 mb-6">
                   Та үзсэн бүтээгдэхүүнүүд энд харагдана
                 </p>
                 <Link
